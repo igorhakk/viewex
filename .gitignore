@@ -1,0 +1,15 @@
+.node
+.idea
+.gradle
+gradle
+gardlew*
+build
+**/build
+**/node_modules
+**/.env
+.last_event_id
+tmp
+**/out
+
+multitenacy
+platform
