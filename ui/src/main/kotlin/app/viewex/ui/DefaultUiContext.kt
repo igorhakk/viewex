@@ -1,63 +1,38 @@
 package app.viewex.ui
 
-import app.viewex.composer.View
-import app.viewex.composer.ViewPropSet
 import app.viewex.composer.action.ViewAction
-import app.viewex.composer.event.EventHandler
 import app.viewex.composer.event.EventListener
 import app.viewex.composer.theme.Theme
+import app.viewex.core.secutity.Principal
 
-class DefaultUiContext(
-    override val theme: Theme,
-    uiViewFactory: UiViewFactory
-) : UiContext {
+class DefaultUiContext<PrincipalType : Principal<*, *>>(
+    override val theme: Theme
+) : UiContext<PrincipalType> {
 
     private val listenerSet: ListenerSet = ListenerSet()
 
-    override val uiView = uiViewFactory.create(this)
+    override val uiView = DefaultUiView(this)
 
-    override val attached: Boolean get() = uiView.attached
+    private var _session: UiSession<PrincipalType>? = null
 
-    private var _session: UiSession? = null
-
-    override val session: UiSession
+    override val session: UiSession<PrincipalType>
         get() = _session
             ?: throw IllegalStateException(
-                "Session for Ui [ ${uiView.viewId}] not initialized yet"
+                "Session for the ui view [ ${uiView.viewId}] not initialized yet"
             )
 
     private val actionPublisher = ActionPublisher(this)
 
     override fun registerListener(listener: EventListener) = listenerSet.add(listener)
 
-    override fun initSession(session: UiSession) {
+    override fun initSession(session: UiSession<PrincipalType>) {
         if (_session != null)
             throw IllegalStateException(
-                "Session for Ui [ ${uiView.viewId}] initialized already"
+                "Session for the ui view [ ${uiView.viewId}] initialized already"
             )
         _session = session
     }
 
-    override fun setUiDefaultContent(view: View) = uiView.setDefaultContent(view)
-
-    override fun renderUiContent(view: View) = uiView.renderContent(view)
-
     override fun callAction(action: ViewAction<*>) = actionPublisher.publish(action)
-
-    override fun addOnAttachedListener(
-        handler: EventHandler.Basic
-    ): EventListener = uiView.addOnAttachedListener(handler)
-
-    override fun addOnDetachedListener(
-        handler: EventHandler.Basic
-    ): EventListener = uiView.addOnDetachedListener(handler)
-
-    override fun addOnUpdatedContentListener(
-        handler: EventHandler.Basic
-    ): EventListener = uiView.addOnUpdatedContentListener(handler)
-
-    override fun addOnUpdatedPropListener(
-        handler: EventHandler.Typed<ViewPropSet.Prop>
-    ): EventListener = uiView.addOnUpdatedPropListener(handler)
 
 }

@@ -1,6 +1,7 @@
 package app.viewex.app.localization
 
 import app.viewex.core.attribute.PairList
+import app.viewex.localization.MessagePath
 
 interface MessageSource {
 

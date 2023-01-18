@@ -2,12 +2,12 @@ rootProject.name = "viewex"
 
 include(":core")
 
-//include(":localization")
-//
-//include(":security")
-//
+include(":localization")
+
+include(":security")
+
 //include(":domain")
-//
+
 include(":app")
 
 include(":ui")
@@ -18,9 +18,7 @@ include(":composer-view")
 
 include(":composer-layout")
 
-//include(":ui")
-//
-//include(":example")
+include(":example")
 //
 //include(":web-js:vue-quasar")
 

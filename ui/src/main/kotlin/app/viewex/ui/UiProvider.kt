@@ -1,21 +1,25 @@
 package app.viewex.ui
 
-import app.viewex.app.AppLayout
+import app.viewex.app.AppProvider
 import app.viewex.composer.ViewId
+import app.viewex.composer.layout.details.LayoutDetails
+import app.viewex.composer.layout.details.NamedLayout
+import app.viewex.core.details.DetailsProvider
+import app.viewex.core.secutity.Principal
 
-interface UiProvider {
+interface UiProvider<PrincipalType : Principal<*, *>> : DetailsProvider<LayoutDetails>, NamedLayout {
 
-    val activeSessions: Set<UiSession>
+    val activeSessions: Set<UiSession<PrincipalType>>
 
-    val apps: Collection<AppLayout>
+    val apps: Collection<AppProvider<PrincipalType>>
 
-    fun getSession(rootId: ViewId): UiSession
+    fun getSession(rootId: ViewId): UiSession<PrincipalType>
 
     fun containsSession(rootId: ViewId): Boolean
 
-    fun initUiView(): UiTemplate
+    fun initUiView(): UiView
 
-    fun startSession(session: UiSession)
+    fun startSession(session: UiSession<PrincipalType>)
 
     fun closeSession(rootId: ViewId)
 

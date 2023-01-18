@@ -1,6 +1,6 @@
-package app.viewex.app.localization
+package app.viewex.localization
 
-import app.viewex.app.IdentifiedPath
+import app.viewex.core.details.IdentifiedPath
 
 class MessagePath(
     items: Iterable<Item>

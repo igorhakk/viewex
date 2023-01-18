@@ -1,6 +1,5 @@
-package app.viewex.composer.layout
+package app.viewex.composer.layout.details
 
-import app.viewex.composer.layout.page.PageLayout
 import app.viewex.core.details.ObjectName
 import app.viewex.core.exception.AnonymousClassException
 import app.viewex.core.type.UrlPath
@@ -12,7 +11,7 @@ class LayoutName(name: String) : ObjectName, UrlPath.Item(name) {
     companion object {
 
         fun nameOfClass(
-            layoutClass: KClass<out LayoutMetadata>,
+            layoutClass: KClass<out NamedLayout>,
             vararg removeSuffix: String
         ): LayoutName = layoutClass.simpleName?.let {
             var name = it
@@ -20,7 +19,7 @@ class LayoutName(name: String) : ObjectName, UrlPath.Item(name) {
                 name = name.removeSuffix(suffix)
             }
             LayoutName(name.firstToLower())
-        } ?: throw AnonymousClassException(PageLayout::class)
+        } ?: throw AnonymousClassException(NamedLayout::class)
 
     }
 

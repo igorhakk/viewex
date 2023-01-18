@@ -5,7 +5,7 @@ import app.viewex.composer.action.ViewAction
 import app.viewex.composer.event.*
 
 abstract class ManagedView(
-    private val context: ViewContext
+    final override val context: ViewContext
 ) : IdentifiedView, Lifecycle {
 
     companion object {
@@ -54,15 +54,15 @@ abstract class ManagedView(
         handler: EventHandler.Typed<ViewPropSet.Prop>
     ): EventListener = MappedEventListener(
         Lifecycle.OnUpdatedViewPropEventName,
-        handler, { data ->
-            val name = data["name"]?.toString()
-                ?: throw EventDataMappingException("Require event prop [ name ] ")
+        handler
+    ) { data ->
+        val name = data["name"]?.toString()
+            ?: throw EventDataMappingException("Require event prop [ name ] ")
 
-            val value = data["value"]
+        val value = data["value"]
 
-            ViewPropSet.Prop(name, value)
-        }
-    ).also {
+        ViewPropSet.Prop(name, value)
+    }.also {
         context.registerListener(it)
     }
 

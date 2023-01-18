@@ -1,5 +1,7 @@
 package app.viewex.ui
 
-fun interface UiViewFactory {
-    fun create(uiContext: UiContext): UiView
+import app.viewex.core.secutity.Principal
+
+fun interface UiViewFactory<PrincipalType : Principal<*, *>> {
+    fun create(uiContext: UiContext<PrincipalType>): UiView
 }

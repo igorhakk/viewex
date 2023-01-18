@@ -15,6 +15,8 @@ interface Lifecycle {
         val OnUpdatedViewPropEventName = EventName.Basic("onUpdatedViewProp")
     }
 
+    val context: ViewContext
+
     val attached: Boolean
 
     fun addOnAttachedListener(handler: EventHandler.Basic): EventListener

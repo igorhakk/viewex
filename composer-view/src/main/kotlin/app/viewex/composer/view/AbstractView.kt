@@ -5,7 +5,7 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.javaField
 
 abstract class AbstractView<Content : ViewContent>(
-    private val context: ViewContext,
+    context: ViewContext,
     templateName: String? = null
 ) : View, ManagedView(context) {
 

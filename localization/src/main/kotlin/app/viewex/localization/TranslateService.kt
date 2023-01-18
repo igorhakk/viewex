@@ -1,6 +1,7 @@
 package app.viewex.app.localization
 
 
+import app.viewex.localization.MessagePath
 import java.util.*
 
 interface TranslateService {

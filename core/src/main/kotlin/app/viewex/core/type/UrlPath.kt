@@ -32,3 +32,6 @@ open class UrlPath(
         }
     }
 }
+
+fun UrlPath.plus(vararg item: UrlPath.Item): UrlPath = plus(item.toList())
+fun UrlPath.plus(items: Iterable<UrlPath.Item>): UrlPath = UrlPath(this.items.plus(items))

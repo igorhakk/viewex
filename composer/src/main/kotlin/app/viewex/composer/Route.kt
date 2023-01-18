@@ -4,7 +4,7 @@ import app.viewex.core.type.UrlPath
 
 class Route(
     val path: UrlPath,
-    val query: LayoutQuery
+    val query: RouteQuery
 ) {
 
     companion object {

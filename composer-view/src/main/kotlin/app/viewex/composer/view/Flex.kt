@@ -84,9 +84,8 @@ class Flex(
     }
 
     fun Flex.flexChild(
-        context: ViewContext,
         flexInit: Flex.() -> Unit
-    ) = addChild(Flex(context).also(flexInit))
+    ) = addChild(Flex(this.context).also(flexInit))
 
     class Content(
         views: Iterable<ViewTemplate>?
