@@ -66,7 +66,7 @@ abstract class ManagedView(
         context.registerListener(it)
     }
 
-    protected fun ManagedView.updateContent(
+    protected fun ManagedView.renderContent(
         content: ViewContent
     ) = context.callAction(
         UpdateContentAction(viewId, content)

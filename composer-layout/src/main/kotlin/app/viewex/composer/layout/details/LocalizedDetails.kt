@@ -12,7 +12,7 @@ class LocalizedDetails(
     private val defaultLabel: Label = Label.Empty,
     private val defaultDescription: Description = Description.Empty,
     private val icon: IconName = IconName.Empty
-) : DetailsProvider<LayoutDetails> {
+) : DetailsDefinition<LayoutDetails> {
 
 
     override suspend fun getDetails(

@@ -1,11 +1,10 @@
-package app.viewex.app
+package app.viewex.app.rest
 
-import app.viewex.app.rest.ErrorResponse
-import app.viewex.app.rest.HttpMethod
-import app.viewex.app.rest.HttpResponse
+import app.viewex.app.AppDefinition
+import app.viewex.app.tmp.RequestParams
 import app.viewex.composer.RouteQuery
 import app.viewex.composer.layout.details.LayoutName
-import app.viewex.composer.layout.details.LocalizedDetails
+import app.viewex.composer.layout.details.LayoutType
 import app.viewex.core.secutity.Principal
 import app.viewex.core.type.UrlPath
 
@@ -13,17 +12,17 @@ abstract class Endpoint<PrincipalType : Principal<*, *>>(
     final override val method: HttpMethod,
     final override val strongPath: Boolean = true,
     name: String? = null
-) : RestEndpoint<PrincipalType> {
+) : EndpointDefinition<PrincipalType> {
+    object Type : LayoutType("endpoint")
+
+    final override val layoutType: LayoutType = Type
+
 
     final override val name: LayoutName = name?.let {
-        LayoutName(it)
+        LayoutName.parse(it)
     } ?: LayoutName.nameOfClass(this::class, "Endpoint", "Layout")
 
-    private val details = LocalizedDetails(
-        MessageGroup(MessageGroup.Type.Endpoint, this.name)
-    )
-
-    final override fun getUrl(app: AppProvider<PrincipalType>): UrlPath = super.getUrl(app)
+    final override fun getUrl(app: AppDefinition<PrincipalType>): UrlPath = super.getUrl(app)
 
     final override suspend fun handle(
         principal: PrincipalType,
@@ -42,4 +41,5 @@ abstract class Endpoint<PrincipalType : Principal<*, *>>(
         routeQuery: RouteQuery,
         additionalPath: UrlPath
     ): HttpResponse
+
 }

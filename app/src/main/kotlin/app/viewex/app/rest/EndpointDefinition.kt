@@ -1,19 +1,20 @@
-package app.viewex.app
+package app.viewex.app.rest
 
-import app.viewex.app.rest.HttpMethod
-import app.viewex.app.rest.HttpResponse
+import app.viewex.app.AppDefinition
+import app.viewex.app.Definition
+import app.viewex.app.tmp.RequestParams
 import app.viewex.composer.RouteQuery
 import app.viewex.core.secutity.Principal
 import app.viewex.core.type.UrlPath
 import app.viewex.core.type.plus
 
-interface RestEndpoint<PrincipalType : Principal<*, *>> : EndpointLayout<PrincipalType> {
+interface EndpointDefinition<PrincipalType : Principal<*, *>> : Definition<PrincipalType> {
 
     val method: HttpMethod
 
     val strongPath: Boolean
 
-    fun getUrl(app: AppProvider<PrincipalType>): UrlPath = app.urlPath.plus(this.name)
+    fun getUrl(app: AppDefinition<PrincipalType>): UrlPath = app.urlPath.plus(this.name)
 
     suspend fun handle(
         principal: PrincipalType,

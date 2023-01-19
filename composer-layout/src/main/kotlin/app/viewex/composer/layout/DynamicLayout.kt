@@ -1,9 +1,8 @@
 package app.viewex.composer.layout
 
-import app.viewex.composer.Layout
 import app.viewex.composer.View
 
-interface DynamicLayout : Layout {
+interface DynamicLayout<Request : LayoutRequest> : Layout<Request> {
 
     fun setDefaultContent(content: View)
 

@@ -6,9 +6,14 @@ import app.viewex.core.type.UrlPath
 import app.viewex.core.util.firstToLower
 import kotlin.reflect.KClass
 
-class LayoutName(name: String) : ObjectName, UrlPath.Item(name) {
+class LayoutName private constructor(
+    name: String?
+) : ObjectName, UrlPath.Item(name) {
 
     companion object {
+        val Empty = LayoutName(null)
+
+        fun parse(name: String): LayoutName = LayoutName(name)
 
         fun nameOfClass(
             layoutClass: KClass<out NamedLayout>,

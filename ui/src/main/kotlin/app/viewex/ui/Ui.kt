@@ -1,10 +1,10 @@
 package app.viewex.ui
 
-import app.viewex.app.AppProvider
+import app.viewex.app.AppDefinition
 import app.viewex.composer.ViewId
 import app.viewex.composer.layout.details.LayoutDetails
 import app.viewex.composer.layout.details.LayoutName
-import app.viewex.core.details.DetailsProvider
+import app.viewex.core.details.DetailsDefinition
 import app.viewex.core.secutity.Principal
 import java.util.*
 
@@ -22,11 +22,11 @@ abstract class Ui<PrincipalType : Principal<*, *>>(
         LayoutName(it)
     } ?: LayoutName.nameOfClass(this::class, "UiLayout", "Layout", "Ui")
 
-    private val appMap: MutableMap<String, AppProvider<PrincipalType>> = mutableMapOf()
+    private val appMap: MutableMap<String, AppDefinition<PrincipalType>> = mutableMapOf()
 
-    final override val apps: Collection<AppProvider<PrincipalType>> get() = appMap.values
+    final override val apps: Collection<AppDefinition<PrincipalType>> get() = appMap.values
 
-    protected fun <App : AppProvider<PrincipalType>> registerApp(app: App): App {
+    protected fun <App : AppDefinition<PrincipalType>> registerApp(app: App): App {
         if (appMap.containsKey(app.name.value))
             throw IllegalStateException("App with name: [ ${app.name} ] already exists")
 
@@ -52,7 +52,7 @@ abstract class Ui<PrincipalType : Principal<*, *>>(
 
     final override suspend fun getDetails(locale: Locale): LayoutDetails = detailsProvider.getDetails(locale)
 
-    protected abstract val detailsProvider: DetailsProvider<LayoutDetails>
+    protected abstract val detailsProvider: DetailsDefinition<LayoutDetails>
 
     protected abstract fun createContext(): UiContext<PrincipalType>
 }

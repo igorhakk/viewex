@@ -1,15 +1,15 @@
-package app.viewex.app
+package app.viewex.composer.layout
 
 import app.viewex.core.attribute.AttributeAccessor
 import app.viewex.core.attribute.Attributes
 import app.viewex.core.attribute.asString
 
-class RequestParams(
+class LayoutParams(
     params: Iterable<Pair<String, Any?>>
 ) : AttributeAccessor {
 
     companion object {
-        val Empty = RequestParams(emptyList())
+        val Empty = LayoutParams(emptyList())
     }
 
     private val attributes = Attributes(params)

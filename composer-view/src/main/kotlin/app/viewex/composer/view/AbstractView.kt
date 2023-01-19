@@ -15,7 +15,7 @@ abstract class AbstractView<Content : ViewContent>(
 
     private var content = ViewContent.Empty
 
-    protected fun setContent(content: Content) = updateContent(content).also { this.content = content }
+    protected fun setContent(content: Content) = renderContent(content).also { this.content = content }
 
     final override fun getTemplate(): ViewTemplate = ViewTemplate(
         viewId,
