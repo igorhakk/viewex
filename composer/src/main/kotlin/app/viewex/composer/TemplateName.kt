@@ -9,7 +9,10 @@ class TemplateName(
 ) : StringType(name, 2, 30, Pattern) {
 
     companion object {
+
         const val Pattern: String = "[A-Z][A-Za-z]{1,29}"
+
+        val Blank = TemplateName("BlankView")
 
         fun ofDefinitionClass(
             definitionClass: KClass<out View>

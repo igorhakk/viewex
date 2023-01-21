@@ -1,5 +1,5 @@
 package app.viewex.composer.layout
 
-interface LayoutRequest {
+open class LayoutRequest(
     val params: LayoutParams
-}
+)

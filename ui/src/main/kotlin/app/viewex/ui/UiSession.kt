@@ -1,18 +1,15 @@
 package app.viewex.ui
 
 import app.viewex.composer.Route
-import app.viewex.composer.ViewContext
+import app.viewex.composer.SessionInfo
 import app.viewex.composer.ViewId
-import app.viewex.composer.ViewSession
 import app.viewex.core.secutity.Principal
 import app.viewex.ui.message.ReceiveMessageListener
 import app.viewex.ui.message.UiMessage
 
-interface UiSession<PrincipalType : Principal<*, *>> : ViewSession {
+interface UiSession<PrincipalType : Principal<*, *>> : SessionInfo {
 
     val rootId: ViewId
-
-    val context: ViewContext
 
     val currentRoute : Route
 

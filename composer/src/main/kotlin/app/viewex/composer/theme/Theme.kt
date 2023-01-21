@@ -6,9 +6,7 @@ import kotlin.reflect.KClass
 
 interface Theme {
 
-    val primaryLightColor: Color
-
-    val primaryDarkColor: Color
+    val primaryColor: Color
 
     fun <Props : ViewProps> getDefaultProps(propsClass: KClass<out Props>) : Props?
 }

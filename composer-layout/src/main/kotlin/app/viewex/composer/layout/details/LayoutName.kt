@@ -1,5 +1,6 @@
 package app.viewex.composer.layout.details
 
+import app.viewex.composer.layout.NamedLayout
 import app.viewex.core.details.ObjectName
 import app.viewex.core.exception.AnonymousClassException
 import app.viewex.core.type.UrlPath
@@ -18,9 +19,14 @@ class LayoutName private constructor(
         fun nameOfClass(
             layoutClass: KClass<out NamedLayout>,
             vararg removeSuffix: String
+        ): LayoutName = nameOfClass(layoutClass, removeSuffix.toList())
+
+        fun nameOfClass(
+            layoutClass: KClass<out NamedLayout>,
+            removeSuffixes: List<String>
         ): LayoutName = layoutClass.simpleName?.let {
             var name = it
-            removeSuffix.toList().forEach { suffix ->
+            removeSuffixes.forEach { suffix ->
                 name = name.removeSuffix(suffix)
             }
             LayoutName(name.firstToLower())

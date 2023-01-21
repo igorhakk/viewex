@@ -2,13 +2,14 @@ package app.viewex.composer
 
 import app.viewex.composer.action.ViewAction
 import app.viewex.composer.event.EventListener
-import app.viewex.composer.theme.Theme
 
 interface ViewContext {
 
-    val session: ViewSession
+    val session: SessionInfo
 
-    val theme: Theme
+    val contentHolder: ContentHolder
+
+    fun attached(viewId: ViewId): Boolean
 
     fun registerListener(listener: EventListener)
 

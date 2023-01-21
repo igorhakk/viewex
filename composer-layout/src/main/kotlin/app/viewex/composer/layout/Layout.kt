@@ -1,7 +1,8 @@
 package app.viewex.composer.layout
 
-import app.viewex.composer.ViewTemplate
+import app.viewex.composer.View
 
 interface Layout<Request : LayoutRequest> {
-    fun getTemplate(request: Request) : ViewTemplate
+    fun getView(request: Request) : View
+
 }

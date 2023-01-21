@@ -1,25 +1,20 @@
 package app.viewex.example
 
 import app.viewex.app.localization.TranslateService
-import app.viewex.composer.layout.details.LayoutDetails
-import app.viewex.core.details.DetailsDefinition
-import app.viewex.ui.DefaultUiContext
+import app.viewex.ui.AbstractUi
 import app.viewex.ui.UiContext
-import app.viewex.ui.UiDetailsBuilder
-import app.viewex.ui.Ui
+import app.viewex.ui.UiLayout
+import app.viewex.ui.UiSession
+import app.viewex.ui.internal.DefaultUiContext
+import app.viewex.ui.internal.DefaultUiLayout
 
 class ViewexUi(
     private val translateService: TranslateService,
     settingsApp: SettingsApp
-) : Ui<User>() {
+) : AbstractUi<User>(translateService) {
+    override fun createContext(
+        session: UiSession<User>
+    ): UiContext<User> = DefaultUiContext(session)
 
-    private val settingsApp = registerApp(settingsApp)
-
-    override val detailsProvider: DetailsDefinition<LayoutDetails> =
-        UiDetailsBuilder(this.name, translateService)
-            .withIcon("apps")
-            .build()
-
-    override fun createContext(): UiContext<User> = DefaultUiContext()
-
+    override fun createLayout(): UiLayout<User> = DefaultUiLayout()
 }

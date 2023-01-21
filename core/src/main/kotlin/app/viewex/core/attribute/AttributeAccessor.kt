@@ -12,6 +12,8 @@ interface AttributeAccessor : IterablePair<String, Any?> {
 
     interface Mutable : AttributeAccessor {
         operator fun set(name: String, value: Any?)
+
+        fun remove(name: String)
     }
 }
 

@@ -1,46 +1,44 @@
 package app.viewex.composer.view
 
-import app.viewex.composer.*
+import app.viewex.composer.Size
+import app.viewex.composer.View
+import app.viewex.composer.ViewContent
+import app.viewex.composer.ViewTemplate
 
 
 class Flex(
-    context: ViewContext,
     flexInit: (Flex.() -> Unit)? = null
-) : AbstractView<Flex.Content>(context), FlexProps {
+) : AbstractView() {
 
-    private val theme = context.theme
+    var direction: Direction? by viewProp(null)
 
-    private val themeProps = theme.getDefaultProps(FlexProps::class)
+    var wrap: Wrap? by viewProp(null)
 
-    override var direction: Direction? by viewProp(themeProps?.direction)
+    var justifyContent: JustifyContent? by viewProp(null)
 
-    override var wrap: Wrap? by viewProp(themeProps?.wrap)
+    var alignItems: AlignItems? by viewProp(null)
 
-    override var justifyContent: JustifyContent? by viewProp(themeProps?.justifyContent)
+    var alignContent: AlignContent? by viewProp(null)
 
-    override var alignItems: AlignItems? by viewProp(themeProps?.alignItems)
+    var height: Size? by viewProp(null)
 
-    override var alignContent: AlignContent? by viewProp(themeProps?.alignContent)
+    var width: Size? by viewProp(null)
 
-    override var height: Size? by viewProp(themeProps?.height)
+    var marginTop: Size? by viewProp(null)
 
-    override var width: Size? by viewProp(themeProps?.width)
+    var marginBottom: Size? by viewProp(null)
 
-    override var marginTop: Size? by viewProp(themeProps?.marginTop)
+    var marginLeft: Size? by viewProp(null)
 
-    override var marginBottom: Size? by viewProp(themeProps?.marginBottom)
+    var marginRight: Size? by viewProp(null)
 
-    override var marginLeft: Size? by viewProp(themeProps?.marginLeft)
+    var paddingTop: Size? by viewProp(null)
 
-    override var marginRight: Size? by viewProp(themeProps?.marginRight)
+    var paddingBottom: Size? by viewProp(null)
 
-    override var paddingTop: Size? by viewProp(themeProps?.paddingTop)
+    var paddingLeft: Size? by viewProp(null)
 
-    override var paddingBottom: Size? by viewProp(themeProps?.paddingBottom)
-
-    override var paddingLeft: Size? by viewProp(themeProps?.paddingLeft)
-
-    override var paddingRight: Size? by viewProp(themeProps?.paddingRight)
+    var paddingRight: Size? by viewProp(null)
 
     private val children = mutableListOf<View>()
 
@@ -60,8 +58,9 @@ class Flex(
 
     fun addChildren(views: Iterable<View>) {
         children.addAll(views)
-        setContent(Content(children.map { it.getTemplate() }))
     }
+
+    override fun getContent(): ViewContent = Content(children)
 
     enum class Direction : EnumProp { //def Row
         Row, RowReverse, Column, ColumnReverse
@@ -85,13 +84,13 @@ class Flex(
 
     fun Flex.flexChild(
         flexInit: Flex.() -> Unit
-    ) = addChild(Flex(this.context).also(flexInit))
+    ) = addChild(Flex().also(flexInit))
 
     class Content(
-        views: Iterable<ViewTemplate>?
+        views: Iterable<View>?
     ) : ViewContent, Iterable<ViewTemplate> {
 
-        private val _views = views?.toList() ?: emptyList()
+        private val _views = views?.map { it.getTemplate() } ?: emptyList()
 
         companion object {
             val Empty = Content(null)
@@ -109,22 +108,5 @@ class Flex(
                     }
         }
     }
-}
 
-interface FlexProps : ViewProps {
-    var direction: Flex.Direction?
-    var wrap: Flex.Wrap?
-    var justifyContent: Flex.JustifyContent?
-    var alignItems: Flex.AlignItems?
-    var alignContent: Flex.AlignContent?
-    var height: Size?
-    var width: Size?
-    var marginTop: Size?
-    var marginBottom: Size?
-    var marginLeft: Size?
-    var marginRight: Size?
-    var paddingTop: Size?
-    var paddingBottom: Size?
-    var paddingLeft: Size?
-    var paddingRight: Size?
 }

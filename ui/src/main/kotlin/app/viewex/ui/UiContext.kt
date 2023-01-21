@@ -7,9 +7,5 @@ interface UiContext<PrincipalType : Principal<*, *>> : ViewContext {
 
     override val session: UiSession<PrincipalType>
 
-    val uiView: UiView
-
-    fun initSession(session: UiSession<PrincipalType>)
-
 
 }

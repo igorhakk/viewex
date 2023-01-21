@@ -1,25 +1,21 @@
-package app.viewex.ui
+package app.viewex.ui.internal
 
-import app.viewex.composer.Lifecycle
+import app.viewex.composer.Managed
 import app.viewex.composer.ViewId
 import app.viewex.composer.action.ViewAction
 import app.viewex.composer.event.EventData
 import app.viewex.composer.event.EventName
+import app.viewex.ui.UiContext
 import app.viewex.ui.message.ViewActionMessage
 import app.viewex.ui.message.ViewEventListener
 
-class ActionPublisher(
-    private val context: UiContext
-) {
+class ActionPublisher {
     private val attachedView: MutableSet<ViewId> = mutableSetOf()
 
     private val pendingActions: MutableSet<ViewAction<*>> = mutableSetOf()
 
-    init {
-        context.session.addReceiveMessageListener(AttachMessageListener())
-    }
-
-    fun isAttached(viewId: ViewId) = attachedView.contains(viewId)
+    private var context: UiContext<*>? = null
+    fun attached(viewId: ViewId) = attachedView.contains(viewId)
 
     fun publish(action: ViewAction<*>) {
         if (attachedView.contains(action.viewId))
@@ -27,8 +23,14 @@ class ActionPublisher(
         pendingActions.add(action)
     }
 
+    fun init(context: UiContext<*>) {
+        this.context = context
+        context.session.addReceiveMessageListener(AttachMessageListener())
+    }
+
     private fun publishAction(action: ViewAction<*>) {
-        context.session.send(ViewActionMessage(action))
+        context?.session?.send(ViewActionMessage(action))
+            ?: throw IllegalStateException("Action publisher not initialized")
     }
 
     inner class AttachMessageListener : ViewEventListener() {
@@ -41,8 +43,8 @@ class ActionPublisher(
                 )
 
             when (name) {
-                Lifecycle.OnAttachedViewEventName -> onAttach(viewId)
-                Lifecycle.OnDetachedViewEventName -> onDetach(viewId)
+                Managed.OnAttachedViewEventName -> onAttach(viewId)
+                Managed.OnDetachedViewEventName -> onDetach(viewId)
             }
         }
 
