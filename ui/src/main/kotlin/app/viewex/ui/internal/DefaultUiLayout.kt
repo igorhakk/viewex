@@ -3,7 +3,6 @@ package app.viewex.ui.internal
 import app.viewex.composer.ManagedContent
 import app.viewex.composer.View
 import app.viewex.composer.ViewId
-import app.viewex.composer.layout.ContentLayout
 import app.viewex.composer.view.DynamicView
 import app.viewex.composer.view.ResizedView
 import app.viewex.core.secutity.Principal
@@ -20,7 +19,7 @@ class DefaultUiLayout<PrincipalType : Principal<*, *>>(
 
     private var contentLayout: ContentLayout = ContentLayout.Proxy
 
-    private val rootView: ResizedView = ResizedView().setContent(contentView)
+    private val rootView: ResizedView = ResizedView()
 
     override val rootId: ViewId = rootView.viewId
 
@@ -41,7 +40,7 @@ class DefaultUiLayout<PrincipalType : Principal<*, *>>(
 
     override fun getView(
         request: UiLayoutRequest
-    ): ResizedView = rootView.replaceContent(
+    ): ResizedView = rootView.cloneWithContent(
         contentLayout.getView(
             ContentLayout.Request(contentView, request.params)
         )

@@ -16,5 +16,5 @@ class ViewexUi(
         session: UiSession<User>
     ): UiContext<User> = DefaultUiContext(session)
 
-    override fun createLayout(): UiLayout<User> = DefaultUiLayout()
+    override fun createLayout(): UiLayout<User> = DefaultUiLayout().s
 }

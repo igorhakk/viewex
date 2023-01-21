@@ -10,7 +10,7 @@ class ResizedView private constructor(viewId: ViewId?) : AbstractView.ContentVie
 
     override val self: ResizedView = this
 
-    override fun replaceContent(
+    override fun cloneWithContent(
         content: View?
     ): ResizedView = ResizedView(viewId).setContent(content)
 

@@ -11,5 +11,5 @@ class DynamicView private constructor(
 
     override val self: DynamicView = this
 
-    override fun replaceContent(content: View?): DynamicView = DynamicView(viewId)
+    override fun cloneWithContent(content: View?): DynamicView = DynamicView(viewId)
 }
